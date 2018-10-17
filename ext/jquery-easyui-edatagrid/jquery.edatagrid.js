@@ -64,6 +64,7 @@
 
     function buildGrid(target){
         var opts = $.data(target, 'edatagrid').options;
+        //向datagrid对象中添加方法
         $(target).datagrid($.extend({}, opts, {
             onDblClickCell:function(index,field,value){
                 if (opts.editing){
@@ -79,6 +80,7 @@
                 // 	$(this).edatagrid('editRow', index);
                 // 	focusEditor(target, field);
                 // }
+                //如果正在编辑, 转换编辑对象
                 if (opts.editIndex >= 0){
                     var dg = $(this);
                     if (opts.editing){
@@ -95,6 +97,7 @@
                 }
             },
             onBeforeEdit: function(index, row){
+                //调用自定义的 onBeforeEdit 方法
                 if (opts.onBeforeEdit){
                     if (opts.onBeforeEdit.call(target, index, row) == false){
                         return false;
@@ -227,8 +230,13 @@
         }
     }
 
-    $.fn.edatagrid = function(options, param){
+
+
+    //这里处理的是 $('#id').edatagrid('saveRow')
+    $.fn.edatagrid = function(options, param)   {
+        //如果调用方法
         if (typeof options == 'string'){
+            //获得到这个方法
             var method = $.fn.edatagrid.methods[options];
             if (method){
                 return method(this, param);
@@ -237,8 +245,14 @@
             }
         }
 
+        /*
+            var options = options || {};这个语句是一个赋值或者初始化语句。
+            该语句在options已经被初始化过后options的值不变，即执行var options = options这一部分。
+            当options未被初始化，即typeof options = 'undefined'时，执行后面部分即var options = {}来初始化一个对象
+         */
         options = options || {};
         return this.each(function(){
+            //获得 edatagrid 的 options
             var state = $.data(this, 'edatagrid');
             if (state){
                 $.extend(state.options, options);
@@ -363,6 +377,7 @@
             });
         },
         saveRow: function(jq){
+            console.debug(jq);
             return jq.each(function(){
                 var dg = $(this);
                 var opts = $.data(this, 'edatagrid').options;
