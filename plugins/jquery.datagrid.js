@@ -1514,6 +1514,8 @@
     };
 
     function _155(_156, _157) {
+        console.debug('--- _155 begin');
+
         var opts = $.data(_156, "datagrid").options;
         var tr = opts.finder.getTr(_156, _157);
         var row = opts.finder.getRow(_156, _157);
@@ -1533,6 +1535,8 @@
         });
         _15a(_156, _157);
         opts.onBeginEdit.apply(_156, _5(_156, [_157, row]));
+
+        console.debug('--- _155 end');
     };
 
 
@@ -2243,9 +2247,11 @@
                 _8b(this);
             });
         }, beginEdit: function (jq, _1fa) {
+            console.debug("---beginEdit begin");
             return jq.each(function () {
                 _155(this, _1fa);
             });
+            console.debug("---beginEdit end");
         }, endEdit: function (jq, _1fb) {
             return jq.each(function () {
                 _15b(this, _1fb, false);
